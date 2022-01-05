@@ -1,7 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { API, Auth } from "aws-amplify";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 
 function App() {
+  async function callApi() {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    console.log({ token });
+    const requestInfo = {
+      headers: { Authorization: token },
+    };
+    const data = await API.get("containera787faf9", "/", requestInfo);
+    console.log({ data });
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -9,17 +23,10 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={callApi}>Call API</button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);

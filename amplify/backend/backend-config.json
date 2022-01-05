@@ -64,5 +64,11 @@
       "apiType": "REST",
       "iamAccessUnavailable": true
     }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "service": "S3AndCloudFront",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }
