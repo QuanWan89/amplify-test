@@ -1,0 +1,68 @@
+{
+  "auth": {
+    "amplifytest": {
+      "service": "Cognito",
+      "serviceType": "managed",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      }
+    }
+  },
+  "api": {
+    "containera787faf9": {
+      "resourceName": "containera787faf9",
+      "dependsOn": [
+        {
+          "category": "",
+          "resourceName": "NetworkStack",
+          "attributes": [
+            "ClusterName",
+            "VpcId",
+            "VpcCidrBlock",
+            "SubnetIds",
+            "VpcLinkId",
+            "CloudMapNamespaceId"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "amplifytest",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb"
+          ]
+        }
+      ],
+      "deploymentMechanism": "FULLY_MANAGED",
+      "imageSource": {
+        "type": "TEMPLATE",
+        "template": "dockerfile-rest-express"
+      },
+      "restrictAccess": true,
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "ElasticContainer",
+      "authName": "amplifytest",
+      "skipHashing": false,
+      "apiType": "REST",
+      "iamAccessUnavailable": true
+    }
+  }
+}
